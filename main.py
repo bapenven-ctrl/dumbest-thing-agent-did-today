@@ -17,6 +17,10 @@ if not 1 <= len(LINE) <= 200:
     raise SystemExit(f"line length {len(LINE)} outside 1-200 characters")
 
 os.makedirs("/output", exist_ok=True)
+try:
+    os.chmod("/output", 0o755)  # gerbang G15: folder keluaran terbaca semua pengguna
+except OSError:
+    pass  # folder milik sandbox; mode file di bawah tetap dipastikan
 with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
     f.write(LINE)
 os.chmod("/output/entry.txt", 0o644)
